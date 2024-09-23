@@ -16,7 +16,7 @@ Option A) Use Composer.
 
 Add this to your `AppKernel.php`
 
-    new DMS\Bundle\FilterBundle\DMSFilterBundle(),
+    DMS\Bundle\FilterBundle\DMSFilterBundle::class => ['all' => true]
 
 ### 3. Configure
 
@@ -31,42 +31,32 @@ This is the default behaviour, if you want to disable it add this to your `confi
 
 ### Adding Annotations
 
-To add annotations to your entity, import the namespace and add them like this:
+To add attributes to your entity, import the namespace and add them like this:
 
 ```php
 <?php
 
 namespace App\Entity;
 
-//Import Annotations
+//Import Attributes
 use DMS\Filter\Rules as Filter;
 
 class User
 {
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    public string $name;
 
-    /**
-    * @Filter\StripTags()
-    * @Filter\Trim()
-    * @Filter\StripNewlines()
-    *
-    * @var string
-    */
-    public $name;
-
-    /**
-    * @Filter\StripTags()
-    * @Filter\Trim()
-    * @Filter\StripNewlines()
-    *
-    * @var string
-    */
-    public $email;
-
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    public string $email;
 }
 ```
 ### Manual Filtering
 
-Use the `dms.filter` service along with annotations in the Entity to filter data.
+Use the `dms.filter` service along with attributes in the Entity to filter data.
 
 ```php
 public function indexAction()
@@ -145,8 +135,7 @@ The `filterIt` method can have any name, but it must take one paramter (the valu
 
 ## Compatibility
 
-This is compatible with Symfony 2.8 and above, including 3.0.
-For Symfony 2.3+ support use "^2.0".
+This is compatible with Symfony 6.4 and above and PHP 8.2 and above
 
 ## Contributing
 
